@@ -4,6 +4,9 @@
 
 一个功能强大且高度可定制的 Hexo 标签插件，用于在您的文章中以优雅的瀑布流形式展示图片画廊。
 
+## 预览
+![Hexo Gallery 效果演示](https://github.com/Pidbid/hexo-gallery/blob/main/imgs/demo.png)
+
 ## ✨ 特性
 
 - **✍️ 块标签语法**: 使用成对的 `{% gallery %}` ... `{% endgallery %}` 标签，让您可以在 Markdown 中整洁地管理图片列表。
