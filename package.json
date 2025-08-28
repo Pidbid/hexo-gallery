@@ -1,0 +1,35 @@
+{
+  "name": "hexo-gallery",
+  "version": "0.1.0",
+  "description": "A powerful and customizable Hexo tag plugin to display beautiful masonry image galleries in your posts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pidbid/hexo-gallery.git"
+  },
+  "keywords": [
+    "hexo",
+    "hexo-plugin",
+    "hexo-tag",
+    "gallery",
+    "image",
+    "masonry"
+  ],
+  "author": "Your Name <your-email@example.com> (https://your-website.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pidbid/hexo-gallery/issues"
+  },
+  "homepage": "https://github.com/pidbid/hexo-gallery#readme",
+  "files": [
+    "index.js",
+    "lib/",
+    "source/"
+  ],
+  "dependencies": {
+    "ejs": "^3.1.8"
+  }
+}
