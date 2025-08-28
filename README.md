@@ -90,4 +90,4 @@ https://.../image7.jpg
 
 ## 📄 许可证
 
-[MIT](LICENSE)
+[Apache](LICENSE)
