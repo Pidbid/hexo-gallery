@@ -5,6 +5,7 @@
 一个功能强大且高度可定制的 Hexo 标签插件，用于在您的文章中以优雅的瀑布流形式展示图片画廊。
 
 ## 预览
+[在线预览](https://wicos.me/gallery/)
 ![Hexo Gallery 效果演示](https://github.com/Pidbid/hexo-gallery/blob/main/imgs/demo.png)
 
 ## ✨ 特性
