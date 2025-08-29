@@ -1,6 +1,6 @@
 {
   "name": "hexo-gallery",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A powerful and customizable Hexo tag plugin to display beautiful masonry image galleries in your posts.",
   "main": "index.js",
   "scripts": {
