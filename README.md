@@ -49,6 +49,7 @@ npm install hexo-gallery --save
 | `date`     | 日期                                                           | (无)        | `"date:2025年"`        |
 | `platform` | 设备平台                                                       | (无)        | `"platform:iPhone"`    |
 | `col`      | 图片显示的列数                                                 | `3`         | `"col:4"`              |
+| `show`      | 限制显示的图片数量，当配置时超出的图片会隐藏，点击后显示，再次点击可隐藏       | (无)         | `"show:5"`              |
 | `background` | 画廊的背景颜色                                                 | `#6e6e73`   | `"background:#ffffff"` |
 | `titlecolor` | **(可选)** 手动指定标题颜色。不设置时会根据背景色自动计算。     | (自动计算)  | `"titlecolor:#ff6347"` |
 | `desccolor`  | **(可选)** 手动指定描述文字颜色。不设置时会自动设为比标题更柔和的颜色。 | (自动计算)  | `"desccolor:#aaa"`      |
