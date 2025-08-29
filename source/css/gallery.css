@@ -40,7 +40,6 @@
     align-items: center;
 }
 
-/* [新增] 如果信息或元数据容器意外为空，则彻底隐藏它们 */
 .hexo-apple-gallery .gallery-info:empty,
 .hexo-apple-gallery .meta-data:empty {
     display: none;
@@ -74,6 +73,34 @@
 .hexo-apple-gallery .gallery-empty-message {
     color: #c7c7cc;
 }
+
+/* “加载更多” 按钮样式 */
+.hexo-apple-gallery .gallery-more-btn {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0;
+    padding: 8px 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: inherit; 
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.hexo-apple-gallery .gallery-more-btn:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* 用于初始隐藏图片的类 */
+.hexo-apple-gallery .gallery-item.initially-hidden {
+    display: none;
+}
+
 
 /* --- 灯箱预览样式 --- */
 

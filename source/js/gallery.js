@@ -32,26 +32,22 @@ document.addEventListener('DOMContentLoaded', function() {
     nextBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
     lightbox.appendChild(nextBtn);
     
-    // [新增] 创建缩略图容器
     const thumbnailsContainer = document.createElement('div');
     thumbnailsContainer.classList.add('lightbox-thumbnails');
     lightbox.appendChild(thumbnailsContainer);
 
     // --- 功能函数 ---
     function showImage(index) {
-        // 更新主图
         lightboxImage.style.transform = 'scale(0.95)';
         setTimeout(() => {
             lightboxImage.src = currentGalleryImages[index];
             lightboxImage.style.transform = 'scale(1)';
         }, 150);
 
-        // [新增] 更新缩略图高亮状态
         const thumbnails = thumbnailsContainer.querySelectorAll('.lightbox-thumbnail');
         thumbnails.forEach((thumb, thumbIndex) => {
             if (thumbIndex === index) {
                 thumb.classList.add('active');
-                // 确保当前高亮的缩略图在可视区域内
                 thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             } else {
                 thumb.classList.remove('active');
@@ -85,8 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentGalleryImages = links.map(a => a.href);
                 currentImageIndex = index;
                 
-                // [新增] 动态生成并填充缩略图
-                thumbnailsContainer.innerHTML = ''; // 清空旧的缩略图
+                thumbnailsContainer.innerHTML = '';
                 currentGalleryImages.forEach((imageUrl, thumbIndex) => {
                     const thumb = document.createElement('img');
                     thumb.src = imageUrl;
@@ -103,6 +98,39 @@ document.addEventListener('DOMContentLoaded', function() {
                 lightbox.classList.add('visible');
             });
         });
+
+        // "More" / "Hide" 按钮的切换逻辑
+        const moreBtn = gallery.querySelector('.gallery-more-btn');
+        if (moreBtn) {
+            // [核心修改] 根据浏览器语言设置按钮文本
+            const lang = navigator.language.slice(0, 2).toLowerCase();
+            const showMoreText = lang === 'zh' ? '更多' : 'More';
+            const showLessText = lang === 'zh' ? '隐藏' : 'Hide';
+
+            // 设置初始按钮文本
+            moreBtn.textContent = showMoreText;
+
+            moreBtn.addEventListener('click', function() {
+                const hiddenItems = gallery.querySelectorAll('.gallery-item.initially-hidden');
+                
+                // 通过检查按钮当前的文本来判断状态
+                const isExpanded = this.textContent === showLessText;
+
+                if (isExpanded) {
+                    // 如果当前是展开状态，则收起
+                    hiddenItems.forEach(item => {
+                        item.style.display = 'none'; // 直接设置内联样式来隐藏
+                    });
+                    this.textContent = showMoreText;
+                } else {
+                    // 如果当前是收起状态，则展开
+                    hiddenItems.forEach(item => {
+                        item.style.display = 'block'; // 直接设置内-联样式来显示
+                    });
+                    this.textContent = showLessText;
+                }
+            });
+        }
     });
 
     lightbox.addEventListener('click', closeLightbox);
@@ -129,3 +157,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+

@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const ejs = require('ejs');
 
-// 校验Hexo上下文是否存在
 if (typeof hexo === 'undefined') {
   return;
 }
@@ -15,24 +14,16 @@ if (typeof hexo === 'undefined') {
  * @returns {string} - 返回深色 '#1d1d1f' 或浅色 '#f5f5f7'.
  */
 function getContrastingFontColor(hex) {
-  if (!hex) return '#f5f5f7'; // 如果颜色无效，返回默认浅色
-
-  // 移除 # 号并将3位颜色码扩展为6位
+  if (!hex) return '#f5f5f7';
   let color = hex.startsWith('#') ? hex.substring(1) : hex;
   if (color.length === 3) {
     color = color.split('').map(char => char + char).join('');
   }
   if (color.length !== 6) return '#f5f5f7';
-
-  // 解析 R, G, B
   const r = parseInt(color.substring(0, 2), 16);
   const g = parseInt(color.substring(2, 4), 16);
   const b = parseInt(color.substring(4, 6), 16);
-
-  // 计算加权亮度 (WCAG标准)
   const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b);
-
-  // 如果亮度大于140（0-255范围），则背景为亮色，返回深色字体，否则返回浅色字体
   return luminance > 140 ? '#1d1d1f' : '#f5f5f7';
 }
 
@@ -43,8 +34,8 @@ function getContrastingFontColor(hex) {
  */
 function parseArgs(args) {
   const result = {};
-  // [已更新] 替换 fontcolor 为 titlecolor 和 desccolor
-  const metaKeys = ['title', 'author', 'site', 'date', 'platform', 'col', 'background', 'titlecolor', 'desccolor'];
+  // [新增] 添加 show 参数
+  const metaKeys = ['title', 'author', 'site', 'date', 'platform', 'col', 'background', 'titlecolor', 'desccolor', 'show'];
   
   args.forEach(arg => {
     let isMeta = false;
@@ -65,10 +56,8 @@ function parseArgs(args) {
 
 // 注册一个成对的块标签
 hexo.extend.tag.register('gallery', function(args, content) {
-  // 1. 解析起始标签里的元数据
   const data = parseArgs(args);
 
-  // 2. 解析块内容里的图片URL列表
   const imageUrls = content.split('\n')
                            .map(url => url.trim())
                            .filter(url => url.length > 0);
@@ -76,24 +65,23 @@ hexo.extend.tag.register('gallery', function(args, content) {
 
   // --- 智能颜色与样式逻辑 ---
   data.col = data.col || 3;
-  data.background = data.background || '#6e6e73';
+  data.background = data.background || '#6e6e63';
 
-  // 步骤 1: 决定标题颜色
-  if (!data.titlecolor) {
-    // 如果用户未提供，则根据背景自动计算
+  if (data.background && !data.titlecolor) {
     data.titlecolor = getContrastingFontColor(data.background);
+  } else {
+    data.titlecolor = data.titlecolor || '#f5f5f7';
   }
 
-  // 步骤 2: 决定描述文字颜色
-  if (!data.desccolor) {
-    // 如果用户未提供，则根据已确定的标题颜色自动计算一个更柔和的版本
-    if (data.titlecolor === '#f5f5f7') { // 如果标题是浅色
-      data.desccolor = '#c7c7cc'; // 描述颜色使用更柔和的浅灰色
-    } else { // 如果标题是深色
-      data.desccolor = '#6e6e73'; // 描述颜色使用更柔和的中灰色
+  if (data.titlecolor && !data.desccolor) {
+    if (data.titlecolor === '#f5f5f7') {
+      data.desccolor = '#c7c7cc';
+    } else {
+      data.desccolor = '#6e6e73';
     }
+  } else {
+    data.desccolor = data.desccolor || '#c7c7cc';
   }
-  // --- 智能颜色与样式逻辑结束 ---
 
   data.galleryId = 'gallery_' + Math.random().toString(36).substring(2, 9);
   
